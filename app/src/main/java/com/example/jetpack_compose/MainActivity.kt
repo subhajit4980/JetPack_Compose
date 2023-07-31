@@ -130,106 +130,107 @@ fun MAINUI() {
     }
 
 }
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun UI() {
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(Color.White),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-////        verticalArrangement = Arrangement.Center
-//    ) {
-//        Image(
-//            painter = painterResource(id = R.drawable.reading),
-//            contentDescription = "dummy",
-////            colorFilter = ColorFilter.tint(Color.Black),
-//            contentScale = ContentScale.Crop
-//        )
-//        Text(
-//            "hello",
-//            color = Color.Green,
-//            fontStyle = FontStyle.Italic,
-//            fontSize = 36.sp,
-//            textAlign = TextAlign.End,
-//            modifier = Modifier.padding(20.dp)
-//        )
-////        Text("Subhajit")
-////        Row(verticalAlignment = Alignment.CenterVertically) {
-////            Text(text = "Hi")
-////            Text(" Sudip")
-////        }
-//        Button(
-//            onClick = { }, colors = ButtonDefaults.buttonColors(
-//                contentColor = Color.Green,
-//                containerColor = Color.Blue
-//            )
-//        ) {
-//            Text(text = "Submit")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun UI() {
+    val context = LocalContext.current.applicationContext
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        horizontalAlignment = Alignment.CenterHorizontally,
+//        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.reading),
+            contentDescription = "dummy",
+//            colorFilter = ColorFilter.tint(Color.Black),
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            "hello",
+            color = Color.Green,
+            fontStyle = FontStyle.Italic,
+            fontSize = 36.sp,
+            textAlign = TextAlign.End,
+            modifier = Modifier.padding(20.dp)
+        )
+//        Text("Subhajit")
+//        Row(verticalAlignment = Alignment.CenterVertically) {
+//            Text(text = "Hi")
+//            Text(" Sudip")
 //        }
-////       textInput
-//        val state = remember { mutableStateOf("") }
-//        OutlinedTextField(
-//            value = state.value,
-//            onValueChange = { state.value = it },
-//            label = { Text("Enter your Name") },
-//            placeholder = { Text(text = "Subhajit", fontStyle = FontStyle.Italic) },
-//            textStyle = androidx.compose.ui.text.TextStyle(fontSize = 20.sp),
-//            maxLines = 1,
-//            leadingIcon = {
-//                Icon(
-//                    painter = painterResource(R.drawable.baseline_person_24),
-//                    contentDescription = ""
-//                )
-//            },
-//            shape = RoundedCornerShape(CornerSize(50.dp)),
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-////                containerColor = Color.Green.copy(alpha = 0.4f),
-//                cursorColor = Color.Yellow,
-//                focusedBorderColor = Color.Blue,
-//                unfocusedBorderColor = Color.Red
-//            ),
-////            modifier = Modifier.background(
-////                brush = Brush.horizontalGradient(
-////                    listOf(
-////                        Color.Green,
-////                        Color.Yellow
-////                    )
-////                ),
-////                shape=RoundedCornerShape(CornerSize(50.dp)),
-////            )
-//            modifier = Modifier.fillMaxWidth(.8f),
-//            keyboardOptions = KeyboardOptions(
-//// This is the type of keyboard, for example, text or number pad. Available options:
-//                keyboardType = KeyboardType.Text,
-//// it signals the keyboard what type of action should be displayed. The Enter key on the keyboard is changed according to the action.
-//                imeAction = ImeAction.Done
-//            ),
-//// It is a lambda that gets called when the above imeAction is triggered.
-//            keyboardActions = KeyboardActions(
-//                onDone = {
-//                    Toast.makeText(
-//                        context,
-//                        "On Done Click: value = ${state.value}",
-//                        Toast.LENGTH_SHORT
+        Button(
+            onClick = { }, colors = ButtonDefaults.buttonColors(
+                contentColor = Color.Green,
+                containerColor = Color.Blue
+            )
+        ) {
+            Text(text = "Submit")
+        }
+//       textInput
+        val state = remember { mutableStateOf("") }
+        OutlinedTextField(
+            value = state.value,
+            onValueChange = { state.value = it },
+            label = { Text("Enter your Name") },
+            placeholder = { Text(text = "Subhajit", fontStyle = FontStyle.Italic) },
+            textStyle = androidx.compose.ui.text.TextStyle(fontSize = 20.sp),
+            maxLines = 1,
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.baseline_person_24),
+                    contentDescription = ""
+                )
+            },
+            shape = RoundedCornerShape(CornerSize(50.dp)),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+//                containerColor = Color.Green.copy(alpha = 0.4f),
+                cursorColor = Color.Yellow,
+                focusedBorderColor = Color.Blue,
+                unfocusedBorderColor = Color.Red
+            ),
+//            modifier = Modifier.background(
+//                brush = Brush.horizontalGradient(
+//                    listOf(
+//                        Color.Green,
+//                        Color.Yellow
 //                    )
-//                        .show()
-//                }
+//                ),
+//                shape=RoundedCornerShape(CornerSize(50.dp)),
 //            )
-//        )
+            modifier = Modifier.fillMaxWidth(.8f),
+            keyboardOptions = KeyboardOptions(
+// This is the type of keyboard, for example, text or number pad. Available options:
+                keyboardType = KeyboardType.Text,
+// it signals the keyboard what type of action should be displayed. The Enter key on the keyboard is changed according to the action.
+                imeAction = ImeAction.Done
+            ),
+// It is a lambda that gets called when the above imeAction is triggered.
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    Toast.makeText(
+                        context,
+                        "On Done Click: value = ${state.value}",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            )
+        )
+
+    }
+
+//    val topAppBarScaffoldState = rememberTopAppBarState()
+//    TopAppBar(
+//        title = { Text(text = "BOOKHUB") },
+//        modifier = Modifier.background(Color.Red),
+//        navigationIcon = {
+//            R.drawable.ic_launcher_background
+//        },
+//        actions = {
 //
-//    }
-//
-////    val topAppBarScaffoldState = rememberTopAppBarState()
-////    TopAppBar(
-////        title = { Text(text = "BOOKHUB") },
-////        modifier = Modifier.background(Color.Red),
-////        navigationIcon = {
-////            R.drawable.ic_launcher_background
-////        },
-////        actions = {
-////
-////        }
-////    )
-//}
+//        }
+//    )
+}
 
