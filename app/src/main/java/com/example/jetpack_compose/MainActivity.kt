@@ -81,6 +81,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Surface(color = MaterialTheme.colorScheme.background) {
 //                UI()
+                MAINUI()
             }
 
         }
