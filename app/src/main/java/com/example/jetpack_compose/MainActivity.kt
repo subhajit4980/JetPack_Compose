@@ -69,6 +69,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpack_compose.Component.ExpandableCard
+import com.example.jetpack_compose.Component.ItemLayout
+import com.example.jetpack_compose.Component.prepareOptionsList
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
 import org.w3c.dom.Text
 import java.time.format.TextStyle
@@ -108,17 +111,17 @@ fun MAINUI() {
 //                    "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
 //                    "ullamco laboris nisi ut aliquip ex ea commodo consequat."
 //        )
-        val optionsList = Component().prepareOptionsList()
+        val optionsList = prepareOptionsList()
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(space = 24.dp), // gap between items
             contentPadding = PaddingValues(all = 22.dp) // padding for LazyColumn layout
         ) {
             items(optionsList) { item ->
-                Component().ItemLayout(optionsList = item)
+                ItemLayout(optionsList = item)
             }
             items(4) {
-                Component().ExpandableCard(
+                ExpandableCard(
                     title = "My Title",
                     description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
                             "sed do eiusmod tempor incididunt ut labore et dolore magna " +

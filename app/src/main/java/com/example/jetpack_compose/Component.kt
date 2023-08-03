@@ -39,6 +39,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.outlined.Article
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -111,7 +112,42 @@ import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
 import org.w3c.dom.Text
 import java.time.format.TextStyle
 
-class Component {
+object Component {
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun TextInput(lebel:String,icon: ImageVector,keyboardType: KeyboardType):String
+    {
+        val state = remember { mutableStateOf("") }
+        OutlinedTextField(
+            value = state.value,
+            onValueChange = { state.value = it },
+            label = { Text(lebel) },
+//            placeholder = { Text(text = "Subhajit", fontStyle = FontStyle.Italic) },
+            textStyle = androidx.compose.ui.text.TextStyle(fontSize = 20.sp),
+            maxLines = 1,
+            leadingIcon = {
+                Icon(
+                   imageVector =  icon,
+                    contentDescription = ""
+                )
+            },
+            shape = RoundedCornerShape(CornerSize(30.dp)),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                cursorColor = Color.Yellow,
+                focusedBorderColor = Color.Blue,
+                unfocusedBorderColor = Color.White
+            ),
+
+            modifier = Modifier.fillMaxWidth(.8f),
+            keyboardOptions = KeyboardOptions(
+// This is the type of keyboard, for example, text or number pad. Available options:
+                keyboardType = keyboardType,
+// it signals the keyboard what type of action should be displayed. The Enter key on the keyboard is changed according to the action.
+                imeAction = ImeAction.Done
+            )
+        )
+        return state.value.toString()
+    }
     @Composable
     fun CardView(@DrawableRes id: Int, text: String, context: Context) {
         val focusRequester = remember {
