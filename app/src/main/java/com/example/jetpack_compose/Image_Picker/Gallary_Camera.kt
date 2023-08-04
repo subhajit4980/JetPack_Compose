@@ -1,11 +1,9 @@
-package com.example.jetpack_compose
+package com.example.jetpack_compose.Image_Picker
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -40,30 +38,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Objects
+import com.example.jetpack_compose.R
+import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Gallary_Camera : ComponentActivity() {
     private lateinit var context: Context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(
-                color = MaterialTheme.colorScheme.background,
-                modifier = Modifier
-                    .fillMaxSize(1f)
-                    .background(
-                        Color.White
-                    )
-            ) {
-                context = LocalContext.current.applicationContext
-                UI()
+            Jetpack_composeTheme(dynamicColor = true) {
+                Surface(
+                ) {
+                    context = LocalContext.current.applicationContext
+                    UI()
 
+                }
             }
+
 
         }
     }
@@ -71,7 +65,7 @@ class Gallary_Camera : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Preview(showBackground = true)
     @Composable
-    private fun UI() {
+    fun UI() {
 //        image from gallery
         var selectimageuri by remember {
             mutableStateOf<Uri?>(null)

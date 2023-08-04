@@ -14,14 +14,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ImageColorPicker : ComponentActivity() {
     private lateinit var navController: NavHostController
     private val paletteViewModel: PaletteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Jetpack_composeTheme {
+            Jetpack_composeTheme(dynamicColor = true) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

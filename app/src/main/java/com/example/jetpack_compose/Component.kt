@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Paint.Style
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.ComponentActivity
@@ -70,6 +71,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -109,6 +111,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.ContentAlpha
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
+import com.example.jetpack_compose.ui.theme.OnPrimaryContainerLight
+import com.example.jetpack_compose.ui.theme.OnPrimaryDark
+import com.example.jetpack_compose.ui.theme.OnPrimaryLight
+import com.example.jetpack_compose.ui.theme.OnSecondaryContainerLight
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.w3c.dom.Text
 import java.time.format.TextStyle
 
@@ -134,8 +141,7 @@ object Component {
             shape = RoundedCornerShape(CornerSize(30.dp)),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 cursorColor = Color.Yellow,
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.White
+                focusedBorderColor = Color.Blue
             ),
 
             modifier = Modifier.fillMaxWidth(.8f),
@@ -342,4 +348,18 @@ object Component {
     }
 
     data class OptionsList(val icon: ImageVector, val option: String)
+//   change statusbar color
+    @Composable
+    fun darkmode(dark:Boolean, context: Context)
+    {
+        val sysUIcon= rememberSystemUiController()
+        DisposableEffect( dark )
+        {
+            sysUIcon.setStatusBarColor(if (dark) OnSecondaryContainerLight else OnPrimaryLight)
+            val Flags=sysUIcon.systemBarsBehavior
+            val nf=if(dark)(Flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)else(Flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())
+                sysUIcon.systemBarsBehavior=nf
+            onDispose {  }
+        }
+    }
 }

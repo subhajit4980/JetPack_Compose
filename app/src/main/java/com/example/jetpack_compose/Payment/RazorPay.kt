@@ -40,9 +40,10 @@ import com.example.jetpack_compose.R
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
+import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
-
+@AndroidEntryPoint
 class RazorPay : ComponentActivity(), PaymentResultListener {
     lateinit var context:Context
     var ActivityRequestCode = 2
@@ -53,7 +54,7 @@ class RazorPay : ComponentActivity(), PaymentResultListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Jetpack_composeTheme {
+            Jetpack_composeTheme(dynamicColor = true) {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     PaymentUI()
                 }
