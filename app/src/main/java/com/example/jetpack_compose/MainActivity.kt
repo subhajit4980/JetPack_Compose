@@ -1,5 +1,6 @@
 package com.example.jetpack_compose
 
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint.Style
@@ -81,8 +82,10 @@ import com.example.jetpack_compose.Component.ItemLayout
 import com.example.jetpack_compose.Component.prepareOptionsList
 import com.example.jetpack_compose.Darktheme.ThemeSwitch
 import com.example.jetpack_compose.Darktheme.ThemeViewModel
+import com.example.jetpack_compose.GoogleMap.Google_Map
 import com.example.jetpack_compose.Graph.Graph
 import com.example.jetpack_compose.Image_Picker.Gallary_Camera
+import com.example.jetpack_compose.NavigationRail.NavigationActivity
 import com.example.jetpack_compose.Payment.RazorPay
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -100,7 +103,7 @@ class MainActivity : ComponentActivity() {
                 val themeViewModel: ThemeViewModel = hiltViewModel()
                 val themeState by themeViewModel.themeState.collectAsState()
                 Surface{
-                    Component.darkmode(themeState.isDarkMode, LocalContext.current)
+                    Component.darkmode(LocalContext.current)
                     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                         MyUI()
                         ThemeSwitch()
@@ -114,7 +117,13 @@ class MainActivity : ComponentActivity() {
                             Text("Payment")
                         }
                         Button(onClick = { startActivity(Intent(this@MainActivity, Graph::class.java)) }) {
-                            Text("Payment")
+                            Text("Graph")
+                        }
+                        Button(onClick = { startActivity(Intent(this@MainActivity, Google_Map::class.java)) }) {
+                            Text("Map")
+                        }
+                        Button(onClick = { startActivity(Intent(this@MainActivity, NavigationActivity::class.java)) }) {
+                            Text("Navigation Rail")
                         }
                     }
                 }

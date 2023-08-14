@@ -74,22 +74,22 @@ class RazorPay : ComponentActivity(), PaymentResultListener {
                 "Enter your Name",
                 Icons.Outlined.PermIdentity,
                 KeyboardType.Text
-            )
+            ){}
              email = TextInput(
                 "Enter your Email",
                 Icons.Outlined.Email,
                 KeyboardType.Email
-            )
+            ){}
             Phone = TextInput(
                 "Enter your Phone Number",
                 Icons.Outlined.Phone,
                 KeyboardType.Number
-            )
+            ){}
             txnAmount = TextInput(
                 "Enter your Tax Amount",
                 Icons.Outlined.CurrencyRupee,
                 KeyboardType.Number
-            )
+            ){}
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(all=10.dp)) {
                 Checkbox(
 

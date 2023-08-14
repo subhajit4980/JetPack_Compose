@@ -3,6 +3,7 @@ package com.example.jetpack_compose
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Paint.Style
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,6 +11,7 @@ import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.Spring
@@ -24,6 +26,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -50,6 +53,8 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Paid
 import androidx.compose.material.icons.outlined.Pending
 import androidx.compose.material.icons.outlined.QuestionAnswer
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.SettingsAccessibility
 import androidx.compose.material.icons.outlined.VerifiedUser
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Button
@@ -66,12 +71,14 @@ import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -97,6 +104,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -109,7 +118,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material3.ContentAlpha
+import com.example.jetpack_compose.Darktheme.ThemeViewModel
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
 import com.example.jetpack_compose.ui.theme.OnPrimaryContainerLight
 import com.example.jetpack_compose.ui.theme.OnPrimaryDark
@@ -122,7 +134,7 @@ import java.time.format.TextStyle
 object Component {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun TextInput(lebel:String,icon: ImageVector,keyboardType: KeyboardType):String
+    fun TextInput(lebel:String,icon: ImageVector,keyboardType: KeyboardType, Done:()->Unit):String
     {
         val state = remember { mutableStateOf("") }
         OutlinedTextField(
@@ -143,13 +155,17 @@ object Component {
                 cursorColor = Color.Yellow,
                 focusedBorderColor = Color.Blue
             ),
-
             modifier = Modifier.fillMaxWidth(.8f),
             keyboardOptions = KeyboardOptions(
 // This is the type of keyboard, for example, text or number pad. Available options:
                 keyboardType = keyboardType,
 // it signals the keyboard what type of action should be displayed. The Enter key on the keyboard is changed according to the action.
                 imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    Done()
+                }
             )
         )
         return state.value.toString()
@@ -350,8 +366,11 @@ object Component {
     data class OptionsList(val icon: ImageVector, val option: String)
 //   change statusbar color
     @Composable
-    fun darkmode(dark:Boolean, context: Context)
+    fun darkmode( context: Context)
     {
+        val themeViewModel: ThemeViewModel = hiltViewModel()
+        val themeState by themeViewModel.themeState.collectAsState()
+        val dark =themeState.isDarkMode
         val sysUIcon= rememberSystemUiController()
         DisposableEffect( dark )
         {
@@ -362,4 +381,108 @@ object Component {
             onDispose {  }
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Composable
+    fun DialogBox(openSetting:()->Unit,onDismiss: () -> Unit) {
+        val contextForToast = LocalContext.current.applicationContext
+        Dialog(
+            onDismissRequest = {
+                onDismiss()
+            }
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(),
+//                elevation = 4.dp
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(150.dp)
+                            .background(color = Color(0xFF35898f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .padding(top = 16.dp, bottom = 16.dp),
+                            imageVector = Icons.Outlined.Settings,
+                            contentDescription = "2-Step Verification",
+                            alignment = Alignment.Center
+                        )
+//                        Icon(imageVector = Icons.Outlined.SettingsAccessibility, contentDescription = )
+                    }
+
+                    Text(
+                        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
+                        text = "Open Setting",
+                        textAlign = TextAlign.Center,
+                        style = androidx.compose.ui.text.TextStyle(
+//                            fontFamily = FontFamily(Font(R.font., FontWeight.Bold)),
+
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(start = 12.dp, end = 12.dp),
+                        text = "Your Location is turn off",
+                        textAlign = TextAlign.Center,
+                        style = androidx.compose.ui.text.TextStyle(
+//                            fontFamily = FontFamily(Font(R.font., FontWeight.Normal)),
+                            fontSize = 14.sp
+                        )
+                    )
+
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 36.dp, start = 36.dp, end = 36.dp, bottom = 8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF35898f)),
+                        onClick = {
+                            onDismiss()
+                            openSetting()
+                            Toast.makeText(
+                                contextForToast,
+                                "Click: Setup Now",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }) {
+                        Text(
+                            text = "Turn On Now",
+                            color = Color.White,
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 16.sp
+                            )
+                        )
+                    }
+
+                    TextButton(
+                        onClick = {
+                            onDismiss()
+                            Toast.makeText(
+                                contextForToast,
+                                "Click: I'll Do It Later",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }) {
+                        Text(
+                            text = "I'll Do It Later",
+                            color = Color(0xFF35898f),
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontSize = 14.sp
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 }
