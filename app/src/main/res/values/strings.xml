@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Jetpack_compose</string>
+    <string name="title_activity_search_bar">SearchBar</string>
+    <string name="title_activity_search_location">SearchLocation</string>
+    <string name="title_activity_lottie">Lottie</string>
+    <string name="title">Foody</string>
+    <string name="button">Check Out</string>
+    <string name="desc">Discover a world of flavors with Foody – the ultimate food companion. Satisfy cravings with a diverse selection of dishes from top eateries.</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

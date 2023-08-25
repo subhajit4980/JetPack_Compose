@@ -9,6 +9,7 @@ import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -83,11 +84,16 @@ import com.example.jetpack_compose.Component.prepareOptionsList
 import com.example.jetpack_compose.Darktheme.ThemeSwitch
 import com.example.jetpack_compose.Darktheme.ThemeViewModel
 import com.example.jetpack_compose.GoogleMap.Google_Map
+import com.example.jetpack_compose.GoogleMap.MapNavigation
 import com.example.jetpack_compose.Graph.Graph
 import com.example.jetpack_compose.Image_Picker.Gallary_Camera
+import com.example.jetpack_compose.Lottie.Lottie
 import com.example.jetpack_compose.NavigationRail.NavigationActivity
+import com.example.jetpack_compose.OnBoarding.Onboarding
 import com.example.jetpack_compose.Payment.RazorPay
+import com.example.jetpack_compose.SearchBar.Searchbar
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 import org.w3c.dom.Text
 import java.time.format.TextStyle
@@ -95,6 +101,7 @@ import java.time.format.TextStyle
 @SuppressLint("StaticFieldLeak")
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -119,11 +126,20 @@ class MainActivity : ComponentActivity() {
                         Button(onClick = { startActivity(Intent(this@MainActivity, Graph::class.java)) }) {
                             Text("Graph")
                         }
-                        Button(onClick = { startActivity(Intent(this@MainActivity, Google_Map::class.java)) }) {
+                        Button(onClick = { startActivity(Intent(this@MainActivity, MapNavigation::class.java)) }) {
                             Text("Map")
                         }
                         Button(onClick = { startActivity(Intent(this@MainActivity, NavigationActivity::class.java)) }) {
                             Text("Navigation Rail")
+                        }
+                        Button(onClick = { startActivity(Intent(this@MainActivity, Searchbar::class.java)) }) {
+                            Text("Search")
+                        }
+                        Button(onClick = { startActivity(Intent(this@MainActivity, Lottie::class.java)) }) {
+                            Text("Lottie")
+                        }
+                        Button(onClick = { startActivity(Intent(this@MainActivity, Onboarding::class.java)) }) {
+                            Text("OnBoarding")
                         }
                     }
                 }

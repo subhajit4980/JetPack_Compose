@@ -47,7 +47,6 @@ import com.example.jetpack_compose.Component.DialogBox
 import com.example.jetpack_compose.Component.TextInput
 import com.example.jetpack_compose.Component.toast
 import com.example.jetpack_compose.Constants.apiKey
-import com.example.jetpack_compose.GoogleMap.Utils.requestLocationEnable
 import com.example.jetpack_compose.R
 import com.example.jetpack_compose.ui.theme.Jetpack_composeTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -157,53 +156,75 @@ class Google_Map : ComponentActivity() {
                 } else {
                     viewModel.locationState = LocationState.LocationDisabled
                 }
-                AnimatedContent(viewModel.locationState) { state ->
 
-                    when (state) {
-                        is LocationState.NoPermission -> {
-
+                AnimatedContent(targetState = viewModel.locationState) {
+                    when(it){
+                        is LocationState.NoPermission-> {
+                            toast("no permission", LocalContext.current)
                         }
-
-                        is LocationState.LocationDisabled -> {
-                            var openDialog by remember {
-                                mutableStateOf(true) // Initially dialog is closed
-                            }
-
-                            DialogBox(openSetting = {
-                                requestLocationEnable(
-                                    this@Google_Map,
-                                    viewModel
-                                )
-                            }) {
-                                openDialog = false
-                            }
+                        is LocationState.LocationDisabled->{
+                            toast("disable", LocalContext.current)
                         }
-
-                        is LocationState.LocationLoading -> {
-
+                        is LocationState.LocationLoading->{
+                            toast("loading", LocalContext.current)
+                        }
+                        is LocationState.LocationAvailable->{
+                            toast("available", LocalContext.current)
                         }
 
                         is LocationState.Error -> {
-
-                        }
-
-                        is LocationState.LocationAvailable -> {
-                            GoogleMap(
-                                cameraPositionState = cameraPositionState,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clip(shape = RoundedCornerShape(20.dp)),
-                                uiSettings = MapUiSettings(compassEnabled = true, zoomControlsEnabled = false)
-                            ){
-                                Marker(
-                                    state = rememberMarkerState(position = state.location),
-                                    title = "Your Location",
-                                    icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
-                                )
-                            }
+                            toast("Error", LocalContext.current)
                         }
                     }
+
                 }
+//                AnimatedContent(viewModel.locationState) { state ->
+//
+//                    when (state) {
+//                        is LocationState.NoPermission -> {
+//
+//                        }
+//
+//                        is LocationState.LocationDisabled -> {
+//                            var openDialog by remember {
+//                                mutableStateOf(true) // Initially dialog is closed
+//                            }
+//
+//                            DialogBox(openSetting = {
+//                                requestLocationEnable(
+//                                    this@Google_Map,
+//                                    viewModel
+//                                )
+//                            }) {
+//                                openDialog = false
+//                            }
+//                        }
+//
+//                        is LocationState.LocationLoading -> {
+//
+//                        }
+//
+//                        is LocationState.Error -> {
+//
+//                        }
+//                        is LocationState.LocationAvailable -> {
+//                            toast(state.location.toString(), LocalContext.current)
+//                            GoogleMap(
+//                                cameraPositionState = cameraPositionState,
+//                                modifier = Modifier
+//                                    .weight(1f)
+//                                    .clip(shape = RoundedCornerShape(20.dp)),
+//                                uiSettings = MapUiSettings(compassEnabled = true, zoomControlsEnabled = false)
+//                            ){
+//                                Marker(
+//                                    state = rememberMarkerState(position = state.location),
+//                                    title = "Your Location",
+//                                    icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+//                                )
+//                            }
+//                        }
+//                    }
+//                }
 //                GoogleMap(
 //                    cameraPositionState = cameraPositionState,
 //                    modifier = Modifier
